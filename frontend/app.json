@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Casa",
+    "slug": "casa",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "casa",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "backgroundColor": "#000000",
+      "package": "com.casa.app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6e689fa4-06f0-45d8-87e3-49563c8716ef"
+      }
+    }
+  }
+}
