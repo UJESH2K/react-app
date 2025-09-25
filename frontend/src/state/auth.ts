@@ -6,7 +6,9 @@ import * as WebBrowser from 'expo-web-browser';
 WebBrowser.maybeCompleteAuthSession();
 
 // Backend API base URL
-const API_BASE_URL = 'http://localhost:5000/api';
+import config from '../config/environment';
+
+const API_BASE_URL = config.API_BASE_URL;
 
 export interface User {
   id: string;

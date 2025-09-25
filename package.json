@@ -1,0 +1,16 @@
+{
+  "name": "casa-ecommerce-app",
+  "version": "1.0.0",
+  "description": "Complete e-commerce app with React Native frontend and Node.js backend",
+  "scripts": {
+    "start": "node start-app.js",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start",
+    "setup": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "seed": "cd backend && npm run seed",
+    "test": "node test-api.js"
+  },
+  "keywords": ["ecommerce", "react-native", "nodejs", "mongodb", "expo"],
+  "author": "Casa Team",
+  "license": "MIT"
+}

@@ -1,5 +1,7 @@
 // API service for Casa E-commerce App
-const API_BASE_URL = 'http://localhost:5000/api';
+import config from '../config/environment';
+
+const API_BASE_URL = config.API_BASE_URL;
 
 interface ApiResponse<T = any> {
   success: boolean;
