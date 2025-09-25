@@ -5,6 +5,9 @@ import * as WebBrowser from 'expo-web-browser';
 
 WebBrowser.maybeCompleteAuthSession();
 
+// Backend API base URL
+const API_BASE_URL = 'http://localhost:5000/api';
+
 export interface User {
   id: string;
   email?: string;
@@ -43,12 +46,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   sendOTP: async (emailOrPhone: string) => {
     set({ isLoading: true });
     try {
-      const res = await fetch("http://localhost:5000/auth/send-otp", {
+      const res = await fetch(`${API_BASE_URL}/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ emailOrPhone }),
       });
-      return res.ok;
+      const data = await res.json();
+      return data.success;
     } catch (error) {
       console.error("Error sending OTP:", error);
       return false;
@@ -60,13 +64,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   login: async (email: string, otp: string) => {
     set({ isLoading: true });
     try {
-      const res = await fetch("http://localhost:5000/auth/login-email", {
+      const res = await fetch(`${API_BASE_URL}/auth/login-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
       });
-      if (!res.ok) return false;
       const data = await res.json();
+      if (!data.success) return false;
       await AsyncStorage.setItem("user", JSON.stringify(data.user));
       set({ user: data.user, isAuthenticated: true });
       return true;
@@ -81,13 +85,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   loginWithPhone: async (phone: string, otp: string) => {
     set({ isLoading: true });
     try {
-      const res = await fetch("http://localhost:5000/auth/login-phone", {
+      const res = await fetch(`${API_BASE_URL}/auth/login-phone`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, otp }),
       });
-      if (!res.ok) return false;
       const data = await res.json();
+      if (!data.success) return false;
       await AsyncStorage.setItem("user", JSON.stringify(data.user));
       set({ user: data.user, isAuthenticated: true });
       return true;
@@ -112,14 +116,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       if (result?.type !== "success" || !result.params.id_token) return false;
 
       // Send token to backend
-      const res = await fetch("http://localhost:5000/auth/google", {
+      const res = await fetch(`${API_BASE_URL}/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken: result.params.id_token }),
       });
 
-      if (!res.ok) return false;
       const data = await res.json();
+      if (!data.success) return false;
       await AsyncStorage.setItem("user", JSON.stringify(data.user));
       set({ user: data.user, isAuthenticated: true });
       return true;
